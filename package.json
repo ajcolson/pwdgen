@@ -1,8 +1,8 @@
 {
   "name": "pwdgen",
   "productName": "pwdgen",
-  "version": "1.0.0",
-  "description": "My Electron application description",
+  "version": "0.0.1",
+  "description": "pwdgen is simple tool for create psuedorandom passwords.",
   "main": "src/index.js",
   "scripts": {
     "start": "electron-forge start",
@@ -48,7 +48,8 @@
   },
   "dependencies": {
     "electron-compile": "^6.4.3",
-    "electron-squirrel-startup": "^1.0.0"
+    "electron-squirrel-startup": "^1.0.0",
+    "mersennetwister": "^0.2.3"
   },
   "devDependencies": {
     "babel-plugin-transform-async-to-generator": "^6.24.1",

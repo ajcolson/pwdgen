@@ -2,9 +2,38 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>Random Password Generator</title>
+    <script src="utils.js"></script>
+    <script src="main.js"></script>
+    <script>
+    // Get all the requirements!
+    console.log("requires get.")
+    let MersenneTwister = require("mersennetwister")
+    let fs = require("fs")
+    </script>
+    <link href="index.css" type="text/css" rel="stylesheet">
   </head>
   <body>
-    Well hey there!!!
+    <div id="preload">One moment while we set a few things up...</div>
+    <div id="appMain">
+      The is the main part of the app!
+    </div>
+    <script>
+    let mt_rand, preloadCompleteEvent, alphabetLower, alphabetUpper, numerics, specialChars, allWords
+    $.DOMReady( () => {
+      console.log("preload start.")
+      preloadCompleteEvent = new Event('preloadComplete')
+      document.addEventListener('preloadComplete', e => { appMain() }, false)
+      console.log("preload event armed.")
+      mt_rand = new MersenneTwister()
+      alphabetLower = 'abcdefghijklmnopqrstuvwxyz'
+      alphabetUpper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+      numerics = '1234567890'
+      specialChars = '.,!$?#%^&*-=+_~:;|@'    
+      allWords = fs.readFileSync("words.txt").toString().split('\n')
+      console.log("preload complete")
+      document.dispatchEvent(preloadCompleteEvent)
+    })
+    </script>
   </body>
 </html>
