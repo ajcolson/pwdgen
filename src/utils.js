@@ -19,3 +19,5 @@ function $(target) {
 $.DOMReady = callback => {
   document.addEventListener("DOMContentLoaded", callback)
 }
+$.show = target => { $(target).style.display = "block"}
+$.hide = target => { $(target).style.display = "none" }
