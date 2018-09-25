@@ -19,5 +19,17 @@ function $(target) {
 $.DOMReady = callback => {
   document.addEventListener("DOMContentLoaded", callback)
 }
+
 $.show = target => { $(target).style.display = "block"}
 $.hide = target => { $(target).style.display = "none" }
+$.toggle = (target, inline = false) => {
+  if (inline){
+    $(target).style.display = ($(target).style.display=="inline-block")?"none":"inline-block";
+  }
+  else $(target).style.display = ($(target).style.display=="block")?"none":"block";
+}
+$.toggleClass = (target, className) => {
+  if ( $(target).classList.contains(className) )
+    $(target).classList.remove(className)
+  else $(target).classList.add(className)
+}

@@ -1,25 +1,79 @@
 function appMain(){
-  console.log("Starting main process.")  
+  console.log("Starting main process.") 
   if (!Config.LicenseAccepted){
     $.show("#license-agreement")
-    $("#license-agreement-agreecheck").onchange = e => {
-      var checkbox_checked = $("#license-agreement-agreecheck").checked
-      Config.LicenseAccepted = checkbox_checked
-      $("#license-agreement-acceptbtn").disabled = !checkbox_checked
-    }
-    $("#license-agreement-acceptbtn").onclick = e => {
-      //showLoadWindow()
-      $.show("#appLoaderBar")
-      $.hide("#license-agreement")
-      window.setTimeout(()=>{
-       // hideLoadWindow()
-       $.show("#passGen")
-       $.hide("#appLoaderBar")
-      }, 1500)
-    }
   } else { 
-    $.show("#passGen")
-  }  
+    $.show("#passGen") 
+  }
+  if (Config.ShowOptions){
+    $.show("#settingsPanel")
+    $("label[for=settingsToggle").MaterialIconToggle.check()
+  }
+  $("#license-agreement-agreecheck").onchange = e => {
+    var checkbox_checked = $("#license-agreement-agreecheck").checked
+    Config.LicenseAccepted = checkbox_checked
+    $("#license-agreement-acceptbtn").disabled = !checkbox_checked
+  }
+  $("#license-agreement-acceptbtn").onclick = e => {
+    //showLoadWindow()
+    $.show("#appLoaderBar")
+    $.hide("#license-agreement")
+    window.setTimeout(()=>{
+      // hideLoadWindow()
+      $.show("#passGen")
+      $.hide("#appLoaderBar")
+    }, 1500)
+  }
+  $("#pwdLengthSlider").MaterialSlider.change(Config.PasswordDefaultLength)
+  $("#pwdLengthDisp").innerText = Config.PasswordDefaultLength
+  if (Config.PasswordDefaultUseUppers)
+    $("label[for=useUppersSwitch]").MaterialSwitch.on()
+  if (Config.PasswordDefaultUseLowers)
+    $("label[for=useLowersSwitch]").MaterialSwitch.on()
+  if (Config.PasswordDefaultUseNumerics)
+    $("label[for=useNumericsSwitch]").MaterialSwitch.on()
+  if (Config.PasswordDefaultUseSpecials)
+    $("label[for=useSpecialsSwitch]").MaterialSwitch.on()
+  
+  $("#createPwdBtn").onclick = e => {
+    $("#createPwdBtn").disabled = true
+    $.toggleClass("#pwdCreateLoadingSpinner", "is-active")
+    $.toggle("#pwdCreateLoadingSpinner", true)
+    $("#pwdGenOutputBoxTxt").innerHTML = `<pre></pre>`
+    var newPwd = mkpwd()
+    setTimeout(()=>{
+      $.toggle("#pwdCreateLoadingSpinner", true)
+      $.toggleClass("#pwdCreateLoadingSpinner", "is-active")
+      $("#createPwdBtn").disabled = false
+      $("#pwdGenOutputBoxTxt").innerHTML = `<pre>${newPwd}</pre>`
+    }, 500)
+  }
+
+  $("#settingsToggle").onchange = e => {
+    var checkbox_checked = $("#settingsToggle").checked
+    Config.ShowOptions = checkbox_checked
+    if (checkbox_checked)
+      $.show("#settingsPanel")
+    else $.hide("#settingsPanel")
+  }
+
+  $("#pwdLengthSlider").oninput = e => {
+    $("#pwdLengthDisp").innerText = $("#pwdLengthSlider").value
+    Config.PasswordDefaultLength = $("#pwdLengthSlider").value
+  }
+
+  $("#useUppersSwitch").onchange = e => {
+    Config.PasswordDefaultUseUppers = $("#useUppersSwitch").checked
+  }
+  $("#useLowersSwitch").onchange = e => {
+    Config.PasswordDefaultUseLowers = $("#useLowersSwitch").checked
+  }
+  $("#useNumericsSwitch").onchange = e => {
+    Config.PasswordDefaultUseNumerics = $("#useNumericsSwitch").checked
+  }
+  $("#useSpecialsSwitch").onchange = e => {
+    Config.PasswordDefaultUseSpecials = $("#useSpecialsSwitch").checked
+  } 
 }
 
 function init(){
@@ -76,18 +130,8 @@ function loadConfig(){
     __v_config = JSON.parse(fs.readFileSync("config.json"))
   } else {
     initErrors.noConfigFileFound = true
-    __v_config = {
-      "ConfigVersion": 1,
-      "LicenseAccepted": false,
-      "PasswordDefaultLength": 8,
-      "PasswordDefaultUseUppers": true,
-      "PasswordDefaultUseLowers": true,
-      "PasswordDefaultUseNumerics": true,
-      "PasswordDefaultUseSpecials": true,
-      "PasswordDefaultUseWords": false,
-      "PasswordDefaultAllowBannedWords" : false
-    }
-    console.info("No config file found. This may be because this is the first time the app is running or because the file was renamed. A new config file will be created.")
+    __v_config = DEFAULTCONFIG
+    console.warn("No config file found. This may be because this is the first time the app is running or because the file was renamed. A new config file will be created.")
   } 
   
   Config = new Proxy(__v_config, {

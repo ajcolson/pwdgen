@@ -6,10 +6,12 @@
     <link rel="stylesheet" href="../node_modules/material-design-lite/material.min.css">
     <script src="../node_modules/material-design-lite/material.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet">
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-blue.min.css" />
     <link href="index.css" type="text/css" rel="stylesheet">
     <script src="utils.js"></script>
     <script src="main.js"></script>
+    <script src="mkpwd.js"></script>
     <script>
     // Get all the requirements!
     console.log("Setting required enviroment variables.")
@@ -27,10 +29,10 @@
       </div>
       <div id="license-agreement">
         <br><br><h1>Hi there!</h1>
-        <p>Thanks for your interest in using this app to help you create new passwords. Before we start up the app, there are just a few legal things we need to cover:</p>
-        <br><br><br><br>
-        <hr><br><br>
-        <h3><i class="material-icons lg-icon">announcement</i>Disclaimers</h3>
+        <p>Thanks for your interest in using this app to help you create new passwords. Before we start up the app, there are just a few legal things we need to cover. Please scroll down to review these below.</p>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <hr><br>
+        <h3><i class="material-icons lg-icon">label_important</i>Disclaimers</h3>
         <ul id="disclaimer-list">
           <li>
             <span>
@@ -57,12 +59,13 @@
             </span>
           </li>
         </ul><br><br><br><br>
-        <hr><br><br>
+        <hr><br>
         <h3><i class="material-icons lg-icon">gavel</i>License</h3>
         <p>Copyright 2018 Alex Colson (alex.colson@hill-rom.com)</p>
         <p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
         <p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
         <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+        <br><br>
         <hr>
         <br>
         <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="license-agreement-agreecheck">
@@ -74,11 +77,75 @@
         <br><br>
       </div>
       <div id="passGen">
-        <h1>Testing</h1>
-      </div> 
+        <header>
+          <h3>Create A New Password</h3>
+        </header>
+        <div id="pwdGenOutputBox">
+          <div id="pwdCreateLoadingSpinner" class="mdl-spinner mdl-spinner--single-color mdl-js-spinner"></div>
+          <div id="pwdGenOutputBoxTxt"><pre></pre></div>
+        </div>
+        <button id="createPwdBtn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">Generate</button>
+        <label class="mdl-icon-toggle mdl-js-icon-toggle mdl-js-ripple-effect" for="settingsToggle">
+          <input type="checkbox" id="settingsToggle" class="mdl-icon-toggle__input">
+          <i class="mdl-icon-toggle__label material-icons">settings</i>
+        </label>
+        <div id="settingsPanel">
+          <div>
+          <span class="lbl">Password Length:</span> <span id="pwdLengthDisp">8</span><br>
+          <input id="pwdLengthSlider" class="mdl-slider mdl-js-slider" type="range" min="8" max="127" value="8" step="1">
+          <br>
+          <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="useUppersSwitch">
+            <input type="checkbox" id="useUppersSwitch" class="mdl-switch__input">
+            <span class="mdl-switch__label">Include Upper Case Letters</span>
+          </label>
+          <br><br>
+          <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="useLowersSwitch">
+            <input type="checkbox" id="useLowersSwitch" class="mdl-switch__input">
+            <span class="mdl-switch__label">Include Lower Case Letters</span>
+          </label>
+          <br><br>
+          <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="useNumericsSwitch">
+            <input type="checkbox" id="useNumericsSwitch" class="mdl-switch__input">
+            <span class="mdl-switch__label">Include Numbers</span>
+          </label>
+          <br><br>
+          <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="useSpecialsSwitch">
+            <input type="checkbox" id="useSpecialsSwitch" class="mdl-switch__input">
+            <span class="mdl-switch__label">Include Special Characters</span>
+          </label>
+          </div>
+        </div>
+        <footer>
+          <button class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect">
+            <i class="material-icons">code</i>
+          </button>
+          <button class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect">
+            <i class="material-icons">bug_report</i>
+          </button>
+          <button class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect">
+            <i class="material-icons">contact_support</i>
+          </button>
+          <br>
+          <i class="material-icons sm-icon">build</i>TEST_BUILD_ALPHA  |  <i class="material-icons sm-icon">copyright</i>2018
+        </footer>
+      </div>
     </div>
        
     <script>
+    const DEFAULTCONFIG = {
+      "ConfigVersion": 1,
+      "LicenseAccepted": false,
+      "PasswordDefaultLength": 8,
+      "PasswordDefaultUseUppers": true,
+      "PasswordDefaultUseLowers": true,
+      "PasswordDefaultUseNumerics": true,
+      "PasswordDefaultUseSpecials": true,
+      "PasswordDefaultUseWords": false,
+      "PasswordDefaultAllowBannedWords" : false,
+      "PasswordDefaultMinWordsUsed": 0,
+      "PasswordDefaultMaxWordsUsed": 0,
+      "ShowOptions": false
+    }
     let Config, __v_config, mt_rand, appInitCompleteEvent, alphabetLower, alphabetUpper, numerics, specialChars, allWords, bannedWords
     let initErrors = {
       "noConfigFileFound" : false,
