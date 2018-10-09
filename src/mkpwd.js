@@ -1,8 +1,5 @@
 function mkpwd(overrideConfig = {}){
 
-  let maxWordsInList = allWords.length
-
-
   let possibleChars = ""
   if (overrideConfig.PasswordDefaultUseUppers || Config.PasswordDefaultUseUppers)
     possibleChars += alphabetUpper

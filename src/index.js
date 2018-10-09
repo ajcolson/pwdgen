@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, Menu } from 'electron';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
@@ -16,9 +16,28 @@ const createWindow = () => {
     height: 644,
     autoHideMenuBar: true,
     resizable: false,
-    scrollBounce: true,
-    fullscreenable: false
+    fullscreenable: false,
+    title: "Random Password Generator"
   });
+
+  //Build The Menu
+  const menu = Menu.buildFromTemplate([
+    {
+      label: 'Edit',
+      submenu: [
+        {role: 'copy'}
+      ]
+    },
+    {
+      label: 'View',
+      submenu: [
+        {role: 'reload'},
+        {role: 'forcereload'},
+        {role: 'toggledevtools'}
+      ]
+    }
+  ])
+  Menu.setApplicationMenu(menu)
 
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/index.html`);

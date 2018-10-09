@@ -36,17 +36,7 @@ function appMain(){
     $("label[for=useSpecialsSwitch]").MaterialSwitch.on()
   
   $("#createPwdBtn").onclick = e => {
-    $("#createPwdBtn").disabled = true
-    $.toggleClass("#pwdCreateLoadingSpinner", "is-active")
-    $.toggle("#pwdCreateLoadingSpinner", true)
-    $("#pwdGenOutputBoxTxt").innerHTML = `<pre></pre>`
-    var newPwd = mkpwd()
-    setTimeout(()=>{
-      $.toggle("#pwdCreateLoadingSpinner", true)
-      $.toggleClass("#pwdCreateLoadingSpinner", "is-active")
-      $("#createPwdBtn").disabled = false
-      $("#pwdGenOutputBoxTxt").innerHTML = `<pre>${newPwd}</pre>`
-    }, 500)
+    makeNewPassword()
   }
 
   $("#settingsToggle").onchange = e => {
@@ -73,7 +63,31 @@ function appMain(){
   }
   $("#useSpecialsSwitch").onchange = e => {
     Config.PasswordDefaultUseSpecials = $("#useSpecialsSwitch").checked
-  } 
+  }
+  $("#getSrcBtn").onclick = e => { 
+    alert("The source code currently is not hosted anywhere, but you can message Alex Colson <alex.colson@hill-rom.com> and he'll be able to get the source to you. Just be sure to include what version of the app you are using. 🙂")
+  }
+  $("#sendBugBtn").onclick = e => { 
+    alert("Did something break? 🙁 Please message Alex Colson <alex.colson@hill-rom.com> about this and let him know what version you are one and include some screenshots if you can.")
+  }
+  $("#getHelpBtn").onclick = e => { 
+    alert("We're working on building up some documentation on this app, but in the meantime please contact Alex Colson <alex.colson@hill-rom.com> and he'll be able to provide help. 😁")
+  }
+  makeNewPassword()
+}
+
+function makeNewPassword(){
+  $("#createPwdBtn").disabled = true
+  $.toggleClass("#pwdCreateLoadingSpinner", "is-active")
+  $.toggle("#pwdCreateLoadingSpinner", true)
+  $("#pwdGenOutputBoxTxt").innerHTML = `<pre></pre>`
+  var newPwd = mkpwd()
+  setTimeout(()=>{
+    $.toggle("#pwdCreateLoadingSpinner", true)
+    $.toggleClass("#pwdCreateLoadingSpinner", "is-active")
+    $("#createPwdBtn").disabled = false
+    $("#pwdGenOutputBoxTxt").innerHTML = `<pre style="user-select: all !important;">${newPwd}</pre>`
+  }, 500)
 }
 
 function init(){
