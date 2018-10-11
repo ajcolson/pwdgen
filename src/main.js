@@ -39,6 +39,11 @@ function appMain(){
     makeNewPassword()
   }
 
+  $("#copyClipboardBtn").onclick = e => {
+    const {clipboard} = require('electron')
+    clipboard.writeText($("#pwdGenOutputBoxTxt pre").innerText)
+  }
+
   $("#settingsToggle").onchange = e => {
     var checkbox_checked = $("#settingsToggle").checked
     Config.ShowOptions = checkbox_checked
@@ -78,6 +83,7 @@ function appMain(){
 
 function makeNewPassword(){
   $("#createPwdBtn").disabled = true
+  $("#copyClipboardBtn").disabled = true
   $.toggleClass("#pwdCreateLoadingSpinner", "is-active")
   $.toggle("#pwdCreateLoadingSpinner", true)
   $("#pwdGenOutputBoxTxt").innerHTML = `<pre></pre>`
@@ -86,6 +92,7 @@ function makeNewPassword(){
     $.toggle("#pwdCreateLoadingSpinner", true)
     $.toggleClass("#pwdCreateLoadingSpinner", "is-active")
     $("#createPwdBtn").disabled = false
+    $("#copyClipboardBtn").disabled = false
     $("#pwdGenOutputBoxTxt").innerHTML = `<pre style="user-select: all !important;">${newPwd}</pre>`
   }, 500)
 }

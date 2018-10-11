@@ -36,10 +36,21 @@ body{
 
 #passGen{
   display:none;
-  padding-top: 70px;
+  padding: 70px 0;
   width: 100%;
 }
 
+#fontPreview{
+  border: 2px solid #ccc;
+  background: white;
+  margin: 10px 0;
+  padding: 0 4px;
+  box-shadow: inset #ccc 0px 0px 5px 1px;
+  border-radius: 5px;
+  min-height: 34px;
+  width: 368px;
+  font-size: 16px
+}
 
 #loadWindow{
   display:none;
@@ -122,7 +133,8 @@ header{
   height: 40px;
   background: rgb(63, 81, 181);
   color: white;
-  padding: 12px
+  padding: 12px;
+  z-index: 9001;
 }
 header h3{margin:0;}
 .lbl{

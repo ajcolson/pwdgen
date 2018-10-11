@@ -84,39 +84,51 @@
         </header>
         <div id="pwdGenOutputBox">
           <div id="pwdCreateLoadingSpinner" class="mdl-spinner mdl-spinner--single-color mdl-js-spinner"></div>
-          <div id="pwdGenOutputBoxTxt"><pre></pre></div>
+          <div id="pwdGenOutputBoxTxt"></div>
         </div>
         <button id="createPwdBtn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">Generate</button>
+        <button id="copyClipboardBtn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">Copy To Clipboard</button>
         <label class="mdl-icon-toggle mdl-js-icon-toggle mdl-js-ripple-effect" for="settingsToggle">
           <input type="checkbox" id="settingsToggle" class="mdl-icon-toggle__input">
           <i class="mdl-icon-toggle__label material-icons">settings</i>
         </label>
         <div id="settingsPanel">
           <div>
-          <span class="lbl">Password Length:</span> <span id="pwdLengthDisp">8</span><br>
-          <input id="pwdLengthSlider" class="mdl-slider mdl-js-slider" type="range" min="8" max="127" value="8" step="1">
-          <br>
-          <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="useUppersSwitch">
-            <input type="checkbox" id="useUppersSwitch" class="mdl-switch__input">
-            <span class="mdl-switch__label">Include Upper Case Letters</span>
-          </label>
-          <br><br>
-          <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="useLowersSwitch">
-            <input type="checkbox" id="useLowersSwitch" class="mdl-switch__input">
-            <span class="mdl-switch__label">Include Lower Case Letters</span>
-          </label>
-          <br><br>
-          <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="useNumericsSwitch">
-            <input type="checkbox" id="useNumericsSwitch" class="mdl-switch__input">
-            <span class="mdl-switch__label">Include Numbers</span>
-          </label>
-          <br><br>
-          <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="useSpecialsSwitch">
-            <input type="checkbox" id="useSpecialsSwitch" class="mdl-switch__input">
-            <span class="mdl-switch__label">Include Special Characters</span>
-          </label>
+            <span class="lbl">Password Length:</span> <span id="pwdLengthDisp">8</span><br>
+            <input id="pwdLengthSlider" class="mdl-slider mdl-js-slider" type="range" min="8" max="127" value="8" step="1">
+            <br>
+            <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="useUppersSwitch">
+              <input type="checkbox" id="useUppersSwitch" class="mdl-switch__input">
+              <span class="mdl-switch__label">Include Upper Case Letters</span>
+            </label>
+            <br><br>
+            <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="useLowersSwitch">
+              <input type="checkbox" id="useLowersSwitch" class="mdl-switch__input">
+              <span class="mdl-switch__label">Include Lower Case Letters</span>
+            </label>
+            <br><br>
+            <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="useNumericsSwitch">
+              <input type="checkbox" id="useNumericsSwitch" class="mdl-switch__input">
+              <span class="mdl-switch__label">Include Numbers</span>
+            </label>
+            <br><br>
+            <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="useSpecialsSwitch">
+              <input type="checkbox" id="useSpecialsSwitch" class="mdl-switch__input">
+              <span class="mdl-switch__label">Include Special Characters</span>
+            </label>
           </div>
         </div>
+        <div id="fontPreview">
+          <h4>Font Preview</h4>
+          <div>
+            Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz
+            <br><br>1 2 3 4 5 6 7 8 9 0
+            <br><br>. , ! $ ? # % ^ & * - = + _ ~ : ; | @
+            <br><br>
+          </div>
+          <br>
+        </div>
+        
         <footer>
           <button id="getSrcBtn" class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect">
             <i class="material-icons">code</i>
@@ -128,7 +140,7 @@
             <i class="material-icons">help_outline</i>
           </button>
           <br>
-          <i class="material-icons sm-icon">build</i> v0.0.1 |  <i class="material-icons sm-icon">copyright</i>2018
+          <i class="material-icons sm-icon">build</i> v0.0.2 |  <i class="material-icons sm-icon">copyright</i>2018
         </footer>
       </div>
     </div>
